@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="static/css/index.css">
+</head>
+
+<body>
+
+    <div id="testo-domanda"></div>
+    <div id="contenitore-quiz">
+        <input type="text" id="risposta-utente" placeholder="Scrivi la tua risposta qui">
+        <button onclick="inviaRisposta()">Invia Risposta</button>
+    </div>
+    <div id="punteggio"></div>
+    <script>
+        const domandeQuiz = [
+            {
+                "ndomanda": 1,
+                "testo_domanda": "Qual è la capitale d'Italia?", 
+                "risposta_utente": "",
+                "risposta": "Roma",
+                "punteggio": 1
+            },
+            {
+                "ndomanda": 2,
+                "testo_domanda": "Chi ha scritto il romanzo 'I Promessi Sposi'?", 
+                "risposta_utente": "",
+                "risposta": "Alessandro Manzoni",
+                "punteggio": 2
+            },
+            {
+                "ndomanda": 3,
+                "testo_domanda": "Quale pianeta del nostro sistema solare è noto come 'il pianeta rosso'?", 
+                "risposta_utente": "",
+                "risposta": "Marte",
+                "punteggio": 3
+            },
+            {
+                "ndomanda": 4,
+                "testo_domanda": "Qual è il più grande oceano del mondo?", 
+                "risposta_utente": "",
+                "risposta": "Oceano Pacifico",
+                "punteggio": 2
+            },
+            {
+                "ndomanda": 5,
+                "testo_domanda": "Qual è il simbolo chimico dell'oro?", 
+                "risposta_utente": "",
+                "risposta": "Au",
+                "punteggio": 1
+            }
+        ];
+
+        let indiceDomandaCorrente = 0;
+        let punteggioTotale = 0;
+        function caricaDomanda() {
+            if (indiceDomandaCorrente < domandeQuiz.length) {
+                document.getElementById("testo-domanda").textContent = domandeQuiz[indiceDomandaCorrente].testo_domanda;
+                document.getElementById("risposta-utente").value = "";
+            } else {
+                document.getElementById("testo-domanda").textContent = "Quiz completato!";
+                document.getElementById("contenitore-quiz").style.display = "none";
+                document.getElementById("punteggio").textContent = "Punteggio finale: " + punteggioTotale;
+            }
+        }
+        function inviaRisposta() {
+            let rispostaUtente = document.getElementById("risposta-utente").value.trim();
+            let rispostaCorretta = domandeQuiz[indiceDomandaCorrente].risposta;
+
+            if (rispostaUtente.toLowerCase() === rispostaCorretta.toLowerCase()) {
+                punteggioTotale += domandeQuiz[indiceDomandaCorrente].punteggio;
+                alert("Risposta corretta! Il tuo punteggio è: " + punteggioTotale);
+            } else {
+                alert("Risposta sbagliata! La risposta corretta era: " + rispostaCorretta);
+            }
+
+            indiceDomandaCorrente++;
+            caricaDomanda();
+        }
+        window.onload = function() {
+            caricaDomanda();
+        };
+    </script>
+
+</body>
+
+</html>
